@@ -37,7 +37,6 @@ const Display = ({text, value}) => {
 
 const Average = ({good, neutral, bad, text}) => {
   const calculateAverage = () => ((good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad))
-  
   return (
     <div>
       {text} {calculateAverage()}
@@ -47,7 +46,6 @@ const Average = ({good, neutral, bad, text}) => {
 
 const OfPositive = ({good, neutral, bad, text}) => {
   const calculateOfPositive = () => (good / (good + neutral + bad)) 
-
   return (
     <div>
       {text} {calculateOfPositive()} %
