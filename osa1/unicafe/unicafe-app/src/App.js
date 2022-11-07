@@ -38,6 +38,18 @@ const App = () => {
   const handleNeutralClick = () => setNeutral(neutral + 1)
   const handleBadClick = () => setBad(bad + 1)
 
+  const totalOfReviews = () => good + neutral + bad 
+  const reviewPoints = () => good * 1 + neutral * 0 + bad * -1
+
+  const averageReview = () =>  reviewPoints() / totalOfReviews()
+
+  const positiveReviews = () => {
+    return (
+      good / totalOfReviews() * 100 + " %"
+    )
+  }
+  
+
   return (
     <div>
       <Header />
@@ -48,6 +60,9 @@ const App = () => {
       <Display text={"good"} amount={good} />
       <Display text={"neutral"} amount={neutral} />
       <Display text={"bad"} amount={bad} />
+      <Display text={"all"} amount={totalOfReviews()}/>
+      <Display text={"average"} amount={averageReview()} />
+      <Display text={"positive"} amount={positiveReviews()} />
     </div>
   )
 }
