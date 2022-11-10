@@ -1,67 +1,111 @@
-const Part = ({course, index}) => {
+const TotalExercises = ({courses, index}) => {
+  const allExercises = courses[index].parts.map( ({exercises}) => {
+    return exercises
+  })
+  const initialValue = 0;
+  const sumOfExercises = allExercises.reduce(
+    (previousValue, currentValue) => previousValue + currentValue,
+    initialValue
+  )
+  return (
+    <p><b>total of {sumOfExercises} exercises</b></p>
+  )
+}
+
+
+const Part = ({courses, index}) => {
   return (
     <div>
-      <p>
-        {course.parts[index].name + " " + course.parts[index].exercises}
-      </p>
+      <h2>{courses[index].name}</h2>
+      {courses[index].parts.map( ({name, exercises}, i) => {
+        return <p key={i}>{name} {exercises}</p>
+      })}
+      <TotalExercises courses={courses} index={index} />
     </div>
   )
 }
 
-const Content = ({course}) => {
 
-return (
+const Content = ({courses}) => {
+  return (
   <div>
-    {course.parts.map(parts => {
-      return <Part course={course} index={parts.id - 1} key={parts.id} />
-    })}
+  <Part courses={courses} index={0}/>
+  <Part courses={courses} index={1} />
   </div>
-)
+  )
 }
 
-const Header = ({course}) => {
+
+const Header = ({text}) => {
   return (
     <div>
-      <h1>{course.name}</h1>
+      <h1>
+        {text}
+      </h1>
     </div>
   )
 }
 
-const Course = ({course}) => {
+const Course = ({courses}) => {
   return (
     <div>
-      <Header course={course} />
-      <Content course={course} />
+      <Header text="Web development curriculum" />
+      <Content courses={courses} />
     </div>
   )
 }
+
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    id: 1,
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10,
-        id: 1
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7,
-        id: 2
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3
-      }
-    ]
-  }
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    }, 
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
+
 
   return (
     <div>
-      <Course course={course} />
+      <Course courses={courses} />
     </div>
   )
 }
