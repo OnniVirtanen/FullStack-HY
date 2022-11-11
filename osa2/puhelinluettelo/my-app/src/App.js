@@ -13,8 +13,20 @@ const App = (props) => {
       name: newName,
       id: persons.length + 1
     }
-    setPersons(persons.concat(nameObject))
-    setNewName('')
+
+    const nameComparison = persons.map(({name}) => {
+      const listOfNames = name
+      return listOfNames
+    })
+
+    const valueOfNameComparison = nameComparison.filter(name => name == newName)
+
+    if (Boolean (valueOfNameComparison == newName)) {
+      alert(`${newName} is already added to phonebook`);
+    } else {
+      setPersons(persons.concat(nameObject))
+      setNewName('')
+    }
   }
 
   const handleNameChange = (event) => {
