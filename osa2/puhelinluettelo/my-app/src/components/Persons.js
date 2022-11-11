@@ -1,6 +1,6 @@
 import Person from "./Person"
 
-const Filter = ({persons, completedFilterArray, person}) => {
+const Persons = ({persons, completedFilterArray, person}) => {
   if (!Boolean(completedFilterArray)) {
     return (
       <div>
@@ -18,4 +18,4 @@ const Filter = ({persons, completedFilterArray, person}) => {
   }
 }
 
-export default Filter
+export default Persons
