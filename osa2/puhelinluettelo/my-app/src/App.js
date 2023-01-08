@@ -2,22 +2,19 @@ import { useState, useEffect } from 'react'
 import Persons from './components/Persons'
 import FilterInput from './components/FilterInput'
 import PersonForm from './components/PersonForm'
-import axios from 'axios'
+import personService from './services/persons'
 
 
 const App = (props) => {
   const [persons, setPersons] = useState([])
 
   useEffect(() => {
-  console.log('effect')
-  axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      console.log('promise fulfilled')
-      setPersons(response.data)
-    })
+    personService
+      .getAll()
+      .then(response => {
+        setPersons(response.data)
+      })
   }, [])
-  console.log('render', persons.length, 'notes')
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
@@ -28,12 +25,9 @@ const App = (props) => {
     return listOfNames
   })
 
-  const testFiltering = nameComparison.map(element => {
-    return element.toLowerCase()
-  })
-  
-  const filteredPersonByName = testFiltering.indexOf(newFilter)
-  const completedFilterArray = persons[filteredPersonByName]
+  const completedFilterArray = persons.filter(person => person.name.toLowerCase().startsWith(newFilter.toLowerCase()));
+
+  const renderPersons = [...completedFilterArray];
 
   const addName = (event) => {
     event.preventDefault()
@@ -45,12 +39,18 @@ const App = (props) => {
 
     const valueOfNameComparison = nameComparison.filter(name => name == newName)
 
-    if (Boolean (valueOfNameComparison == newName)) {
+    if (valueOfNameComparison == newName) {
       alert(`${newName} is already added to phonebook`);
     } else {
       setPersons(persons.concat(nameObject))
       setNewName('')
       setNewNumber('')
+    
+      personService
+      .create(nameObject)
+      .then(response => {
+        console.log("response from post", response);
+      })
     }
   }
 
@@ -75,7 +75,7 @@ const App = (props) => {
          handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}
          />
       <h2>Numbers</h2>
-      <Persons persons={persons} completedFilterArray={completedFilterArray}/>
+      <Persons persons={renderPersons}/>
     </div>
   )
 }
