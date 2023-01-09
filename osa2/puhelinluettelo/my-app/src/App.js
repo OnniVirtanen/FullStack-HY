@@ -1,84 +1,87 @@
-import { useState, useEffect } from 'react'
-import Persons from './components/Persons'
-import FilterInput from './components/FilterInput'
-import PersonForm from './components/PersonForm'
-import personService from './services/persons'
-import { v4 as uuidv4 } from 'uuid';
-
+import { useState, useEffect } from "react";
+import Persons from "./components/Persons";
+import FilterInput from "./components/FilterInput";
+import PersonForm from "./components/PersonForm";
+import personService from "./services/persons";
+import { v4 as uuidv4 } from "uuid";
 
 const App = (props) => {
-  const [persons, setPersons] = useState([])
+  const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    personService
-      .getAll()
-      .then(response => {
-        setPersons(response.data)
-      })
-  }, [])
+    personService.getAll().then((response) => {
+      setPersons(response.data);
+    });
+  }, []);
 
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
-  const [newFilter, setNewFilter] = useState('')
+  const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
+  const [newFilter, setNewFilter] = useState("");
 
-  const nameComparison = persons.map(({name}) => {
-    const listOfNames = name
-    return listOfNames
-  })
+  const nameComparison = persons.map(({ name }) => {
+    const listOfNames = name;
+    return listOfNames;
+  });
 
-  const completedFilterArray = persons.filter(person => person.name.toLowerCase().startsWith(newFilter.toLowerCase()));
+  const completedFilterArray = persons.filter((person) =>
+    person.name.toLowerCase().startsWith(newFilter.toLowerCase())
+  );
 
   const renderPersons = [...completedFilterArray];
 
   const addName = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const nameObject = {
       name: newName,
       phone: newNumber,
-      id: uuidv4()
-    }
+      id: uuidv4(),
+    };
 
-    const valueOfNameComparison = nameComparison.filter(name => name == newName)
+    let valueOfNameComparison = nameComparison
+      .filter((name) => name === newName)
+      .join();
 
-    if (valueOfNameComparison == newName) {
+    if (valueOfNameComparison === newName) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      setPersons(persons.concat(nameObject))
-      setNewName('')
-      setNewNumber('')
-    
-      personService
-      .create(nameObject)
-      .then(response => {
+      setPersons(persons.concat(nameObject));
+      setNewName("");
+      setNewNumber("");
+
+      personService.create(nameObject).then((response) => {
         console.log("response from post", response);
-      })
+      });
     }
-  }
+  };
 
   const handleFilterChange = (event) => {
-    setNewFilter(event.target.value.toLowerCase())
-  }
+    setNewFilter(event.target.value.toLowerCase());
+  };
 
   const handleNameChange = (event) => {
-    setNewName(event.target.value)
-  }
+    setNewName(event.target.value);
+  };
 
   const handleNumberChange = (event) => {
-    setNewNumber(event.target.value)
-  }
+    setNewNumber(event.target.value);
+  };
 
   return (
     <div>
       <h2>Phonebook</h2>
-        <FilterInput handleFilterChange={handleFilterChange} />
+      <FilterInput handleFilterChange={handleFilterChange} />
       <h2>Add a new</h2>
-        <PersonForm addName={addName} newName={newName} newNumber={newNumber}
-         handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}
-         />
+      <PersonForm
+        addName={addName}
+        newName={newName}
+        newNumber={newNumber}
+        handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange}
+      />
       <h2>Numbers</h2>
-      <Persons persons={renderPersons}/>
+      <Persons persons={renderPersons} setPersons={setPersons} />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
