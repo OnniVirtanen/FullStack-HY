@@ -4,7 +4,7 @@ import personService from '../services/persons'
 const Persons = ({persons}) => {
 
   const handleClick = (list) => {
-    if (window.confirm("Do you really want to leave?")) {
+    if (window.confirm(`Delete ${list.name}`)) {
       personService.remove(list.id)
     }
   }
