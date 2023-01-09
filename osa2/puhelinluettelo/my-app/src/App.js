@@ -3,6 +3,7 @@ import Persons from './components/Persons'
 import FilterInput from './components/FilterInput'
 import PersonForm from './components/PersonForm'
 import personService from './services/persons'
+import { v4 as uuidv4 } from 'uuid';
 
 
 const App = (props) => {
@@ -34,7 +35,7 @@ const App = (props) => {
     const nameObject = {
       name: newName,
       phone: newNumber,
-      id: persons.length + 1
+      id: uuidv4()
     }
 
     const valueOfNameComparison = nameComparison.filter(name => name == newName)

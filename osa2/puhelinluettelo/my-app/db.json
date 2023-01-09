@@ -1,14 +1,19 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "phone": "040-123456",
-      "id": 1
+      "name": "Arto-Hellas",
+      "phone": "044-8752-125",
+      "id": "ba2be64d-f5dd-4395-998a-8abdcfb685a0"
+    },
+    {
+      "name": "Anita Durmanova",
+      "phone": "044-293-3306",
+      "id": "d49f910b-260f-4d9d-bd16-b2c8ca165358"
     },
     {
       "name": "Onni Virtanen",
       "phone": "040-185-7688",
-      "id": 3
+      "id": "2773ccc8-d5b9-4906-8b69-7fbb72c29960"
     }
   ]
 }
