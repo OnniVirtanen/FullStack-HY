@@ -44,12 +44,13 @@ const App = (props) => {
     if (valueOfNameComparison === newName) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      setPersons(persons.concat(nameObject));
-      setNewName("");
-      setNewNumber("");
-
-      personService.create(nameObject).then((response) => {
+      personService
+      .create(nameObject)
+      .then((response) => {
         console.log("response from post", response);
+        setPersons(persons.concat(nameObject));
+        setNewName("");
+        setNewNumber("");
       });
     }
   };
